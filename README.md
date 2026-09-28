@@ -1,65 +1,72 @@
-# ⚡ EV Fleet Analytics Dashboard
+# EV Fleet Analytics & Total Cost of Ownership Dashboard
 
-An interactive web dashboard for exploring **8,000 Washington State Electric Vehicle registrations**. Built with Python, Streamlit, and scikit-learn. Designed as a portfolio project showcasing data engineering, interactive visualization, and machine learning skills — relevant to automotive and data roles.
-
----
-
-## 📸 What It Does
-
-| Feature | Details |
-|---|---|
-| **Interactive filters** | Filter by Make, EV Type, Model Year, Electric Range |
-| **KPI cards** | Live totals: fleet count, avg range, top make, BEV % share |
-| **5 Plotly charts** | Bar, line, scatter, box plot, city distribution |
-| **ML Range Predictor** | Predicts electric range from Make + Model + Year + MSRP |
-| **CSV export** | Download any filtered slice of data |
-| **Data table** | Toggle raw data view |
+An interactive analytics platform for exploring 8,000 Washington State Electric Vehicle registrations. Built with Python, Streamlit, Plotly, and scikit-learn. Combines fleet data engineering, interactive telemetry visualizations, machine learning range prediction, and an interactive Total Cost of Ownership (TCO) financial simulator.
 
 ---
 
-## 🤖 Machine Learning Model
+## Unique Key Feature: Lifecycle TCO & Carbon Abatement Simulator
 
-The predictor uses a **Voting Ensemble** combining:
-- `RandomForestRegressor` (150 trees, depth 12)
-- `GradientBoostingRegressor` (150 estimators, lr 0.08)
+In addition to standard registration analytics, the dashboard includes an interactive Total Cost of Ownership (TCO) and Environmental Impact engine:
+- Multi-Year Ownership Modeling: Dynamically computes cumulative acquisition, fuel, and maintenance costs comparing EV models against gasoline internal combustion engine (ICE) vehicles over 1-10 year horizons.
+- Carbon Offset Quantification: Computes metric tons of greenhouse gas emissions avoided based on annual mileage, vehicle efficiency (kWh/100mi), and US electric grid emissions baselines.
+- Real-Time Sensitivity Controls: Users can customize annual mileage, local electricity tariffs ($/kWh), and regional gasoline prices ($/gal) to calculate net financial break-even points.
 
-**Features used:**
+---
+
+## Features
+
+- Interactive filters: Filter by Make, EV Type, Model Year, and Electric Range
+- KPI summary cards: Live counts of fleet size, average range, leading manufacturer, and BEV market share
+- Five Plotly analytical charts: Distribution bar chart, adoption trajectory, range vs MSRP scatter, box plot, and geographic bubble map
+- Ensemble ML Range Predictor: Voting regressor combining Random Forest and Gradient Boosting to predict range from vehicle specifications
+- TCO and Carbon Offset Simulator: Comparative financial curves and greenhouse gas abatement modeling
+- CSV export: Download any filtered dataset slice
+- Raw data toggle: Inspect raw tabular registration records
+
+---
+
+## Machine Learning Model
+
+The predictor uses a Voting Ensemble combining:
+- RandomForestRegressor (150 trees, max depth 12)
+- GradientBoostingRegressor (150 estimators, learning rate 0.08)
+
+Features used:
 - Make (label-encoded)
 - Model (label-encoded)
 - Model Year
 - EV Type (BEV / PHEV)
 - Base MSRP
 
-**Performance on held-out test set (1,200 vehicles):**
-| Metric | Value |
-|---|---|
-| R² Score | **0.985** |
-| Mean Absolute Error | **11.3 miles** |
-| Training samples | 6,800 |
+Performance on held-out test set (1,200 vehicles):
+- R2 Score: 0.985
+- Mean Absolute Error: 11.3 miles
+- Training samples: 6,800 records
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 ev-dashboard/
-├── app.py                      # Main Streamlit entry point
+├── app.py                      # Main Streamlit application entry point
 ├── data/
 │   └── ev_data.csv             # 8,000-row EV registration dataset
 ├── components/
 │   ├── filters.py              # Sidebar filter logic
-│   ├── charts.py               # All 5 Plotly chart functions
-│   └── stats.py                # KPI card computations
+│   ├── charts.py               # Plotly chart generation
+│   ├── stats.py                # KPI computations
+│   └── tco_calculator.py       # TCO & Carbon offset simulation engine
 ├── utils/
-│   ├── data_loader.py          # CSV loading + cleaning pipeline
-│   └── ml_model.py             # Ensemble model training + prediction
+│   ├── data_loader.py          # Data cleaning and loading pipeline
+│   └── ml_model.py             # Voting ensemble training and inference
 ├── requirements.txt
 └── README.md
 ```
 
 ---
 
-## 🚀 Install & Run Locally
+## Installation & Local Execution
 
 ### Prerequisites
 - Python 3.10 or higher
@@ -68,69 +75,51 @@ ev-dashboard/
 ### Steps
 
 ```bash
-# 1. Unzip and enter the project
-unzip ev-dashboard.zip
-cd ev-dashboard
+# 1. Clone repository
+git clone https://github.com/Adithya-Mallepally/EV-dashboard.git
+cd EV-dashboard
 
-# 2. (Optional but recommended) Create a virtual environment
+# 2. Create virtual environment
 python -m venv venv
-source venv/bin/activate        # Mac/Linux
-venv\Scripts\activate           # Windows
+venv\Scripts\activate
 
 # 3. Install dependencies
 pip install -r requirements.txt
 
-# 4. Run
+# 4. Start the application
 streamlit run app.py
 ```
 
-The app opens at **http://localhost:8501**
-
-> The dataset is included in `data/ev_data.csv`. If the file is missing, the app auto-generates 600 rows of realistic mock data as a fallback.
+The application will be accessible at http://localhost:8501
 
 ---
 
-## ☁️ Deploy Free on Streamlit Community Cloud
+## Dataset
 
-1. Push this folder to a **public GitHub repo**
-2. Go to [share.streamlit.io](https://share.streamlit.io) and sign in with GitHub
-3. Click **New app** → select your repo → set main file: `app.py`
-4. Click **Deploy** — live public URL in ~2 minutes
+- Source: Washington State Department of Licensing (DOL)
+- Records: 8,000 EV registrations
+- Coverage: 19 makes, 50+ models (Tesla, BMW, Ford, Hyundai, Kia, Volvo, Rivian, etc.)
+- Model Years: 2008 - 2024
+- Powertrain Split: ~75% Battery Electric (BEV), ~25% Plug-in Hybrid (PHEV)
+- Geographic Coverage: 20 Washington State cities across 6 counties
 
----
-
-## 📊 Dataset
-
-| Field | Value |
-|---|---|
-| Source | Washington State Department of Licensing (DOL) |
-| Records | 8,000 EV registrations |
-| Vehicles | 19 makes, 50+ models (Tesla, BMW, Ford, Hyundai, Kia, Volvo, Rivian…) |
-| Year range | 2008 – 2024 |
-| EV split | ~75% BEV, ~25% PHEV |
-| Geo coverage | 20 Washington State cities across 6 counties |
-
-Key columns: `Make`, `Model`, `Model Year`, `Electric Vehicle Type`, `Electric Range`, `Base MSRP`, `City`, `County`, `State`
+Key attributes: Make, Model, Model Year, Electric Vehicle Type, Electric Range, Base MSRP, City, County, State.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Library |
 |---|---|
 | Dashboard | Streamlit 1.33 |
-| Data processing | Pandas 2.2, NumPy 1.26 |
+| Data Processing | Pandas 2.2, NumPy 1.26 |
 | Visualizations | Plotly Express 5.22 |
-| Machine learning | scikit-learn 1.4 |
+| Machine Learning | scikit-learn 1.4 |
 
 ---
 
-## 💡 How to Mention This in an Application
+## Author
 
-> *"Built an interactive EV fleet analytics dashboard using Python, Streamlit, and Plotly — analyzing 8,000 vehicle registrations with real-time filters, 5 chart types, and a RandomForest + GradientBoosting ensemble model achieving R²=0.985 for electric range prediction. Deployed on Streamlit Cloud."*
-
----
-
-## 📄 License
-
-MIT — free to use, modify, and share.
+Roopadithya Vardhan Mallepally
+M.Sc. Software Engineering - BTH Sweden
+GitHub: https://github.com/Adithya-Mallepally
