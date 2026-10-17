@@ -1,17 +1,33 @@
+"""
+utils/data_loader.py
+────────────────────
+Data ingestion and cleaning pipeline for Washington State EV registrations.
+Guarantees reliable absolute path resolution across testing, deployment, and CLI execution.
+"""
+
+import os
 import pandas as pd
 import numpy as np
-import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-def load_data(path="data/ev_data.csv"):
+def load_data(path=None) -> pd.DataFrame:
     """
-    Load and clean the EV dataset.
-    Falls back to generating realistic mock data if CSV not found.
+    Load and clean the EV registration dataset.
+    Guarantees absolute resolution to avoid fallback mock errors.
     """
+    if path is None:
+        path = os.path.join(BASE_DIR, "data", "ev_data.csv")
+    elif not os.path.isabs(path):
+        candidate = os.path.join(BASE_DIR, path)
+        if os.path.exists(candidate):
+            path = candidate
+
     if os.path.exists(path):
         df = pd.read_csv(path, low_memory=False)
     else:
-        print("Dataset not found — generating mock data.")
+        print(f"Dataset not found at {path} — generating mock fallback.")
         df = _generate_mock_data(600)
 
     df = _clean(df)
@@ -19,7 +35,7 @@ def load_data(path="data/ev_data.csv"):
 
 
 def _clean(df: pd.DataFrame) -> pd.DataFrame:
-    """Clean and standardise the DataFrame."""
+    """Clean and standardise DataFrame columns and datatypes."""
     df.columns = df.columns.str.strip()
 
     required = ["Make", "Model Year", "Electric Range", "Electric Vehicle Type"]
@@ -34,7 +50,7 @@ def _clean(df: pd.DataFrame) -> pd.DataFrame:
     df.dropna(subset=["Model Year", "Electric Range"], inplace=True)
 
     for col in df.select_dtypes(include="object").columns:
-        df[col] = df[col].str.strip()
+        df[col] = df[col].astype(str).str.strip()
 
     df["EV Type Short"] = df["Electric Vehicle Type"].apply(
         lambda x: "BEV" if "Battery" in str(x) else "PHEV"
@@ -43,8 +59,8 @@ def _clean(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def _generate_mock_data(n=600):
-    """Fallback: generate minimal realistic mock data."""
+def _generate_mock_data(n=600) -> pd.DataFrame:
+    """Fallback: generate realistic mock EV fleet data."""
     np.random.seed(42)
     makes = ["Tesla", "Nissan", "Chevrolet", "BMW", "Ford",
              "Hyundai", "Kia", "Rivian", "Volkswagen", "Toyota"]
@@ -59,10 +75,14 @@ def _generate_mock_data(n=600):
         base = 280 if make == "Tesla" else 200
         ev_range = int(np.clip(np.random.normal(base + (year - 2015) * 4, 25), 20, 420))
         rows.append({
-            "Make": make, "Model": make + " EV", "Model Year": year,
+            "Make": make,
+            "Model": f"{make} Model EV",
+            "Model Year": year,
             "Electric Vehicle Type": ev_type,
             "Electric Range": ev_range,
             "Base MSRP": int(np.random.normal(45000, 12000)),
-            "City": "Seattle", "County": "King", "State": "WA",
+            "City": "Seattle",
+            "County": "King",
+            "State": "WA",
         })
     return pd.DataFrame(rows)

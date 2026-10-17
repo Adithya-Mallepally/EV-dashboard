@@ -22,7 +22,17 @@ def calculate_tco(
     ev_base_msrp: float = 45000.0,
     ice_base_msrp: float = 38000.0
 ):
-    """Computes comparative multi-year operational and acquisition costs."""
+    """Computes comparative multi-year operational and acquisition costs with input validation."""
+    # Defend against division by zero or negative inputs
+    annual_miles = max(100, int(annual_miles))
+    years = max(1, min(15, int(years)))
+    ice_mpg = max(5.0, float(ice_mpg))
+    gas_price_per_gal = max(0.5, float(gas_price_per_gal))
+    electricity_kwh_cost = max(0.01, float(electricity_kwh_cost))
+    ev_kwh_per_100_miles = max(5.0, float(ev_kwh_per_100_miles))
+    ev_base_msrp = max(5000.0, float(ev_base_msrp))
+    ice_base_msrp = max(5000.0, float(ice_base_msrp))
+
     timeline = list(range(1, years + 1))
 
     # Annual fuel vs electricity

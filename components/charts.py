@@ -4,6 +4,7 @@ components/charts.py
 Plotly visualization engine styled with the DeLorean Marketplace design system.
 Dark obsidian surfaces (#141417), DeLorean Redshift (#de1e14) and brushed steel palette,
 Neue Haas Grotesk and TT Mussels typography, zero emojis and zero icons.
+Fault-tolerant rendering with elegant empty-state handling.
 """
 
 import plotly.express as px
@@ -23,6 +24,7 @@ DELOREAN_PALETTE = [
     "#f43f5e",  # Rose Accent
     "#06b6d4",  # Cyan Glow
 ]
+
 
 def _apply_delorean_layout(fig, title_text: str):
     """Apply consistent DeLorean Marketplace theme to a Plotly figure."""
@@ -69,8 +71,26 @@ def _apply_delorean_layout(fig, title_text: str):
     return fig
 
 
-def chart_top_makes(df):
+def _empty_figure(title_text: str):
+    """Produce a graceful empty-state chart when filters produce zero records."""
+    fig = go.Figure()
+    _apply_delorean_layout(fig, title_text)
+    fig.add_annotation(
+        text="NO TELEMETRY RECORDS MATCH CURRENT FILTER SELECTION",
+        xref="paper", yref="paper",
+        x=0.5, y=0.5, showarrow=False,
+        font=dict(family="'MaisonNeueMono', monospace", size=12, color="#71717a")
+    )
+    fig.update_xaxes(showgrid=False, showticklabels=False)
+    fig.update_yaxes(showgrid=False, showticklabels=False)
+    return fig
+
+
+def chart_top_makes(df: pd.DataFrame):
     """Bar chart: Top 10 EV makes by count."""
+    if df.empty:
+        return _empty_figure("Top 10 Manufacturers by Fleet Volume")
+
     counts = df["Make"].value_counts().head(10).reset_index()
     counts.columns = ["Make", "Count"]
     fig = px.bar(
@@ -83,8 +103,11 @@ def chart_top_makes(df):
     return fig
 
 
-def chart_adoption_trend(df):
+def chart_adoption_trend(df: pd.DataFrame):
     """Line chart: EV adoption over model years."""
+    if df.empty:
+        return _empty_figure("Registration Trajectory by Propulsion Type")
+
     trend = df.groupby(["Model Year", "Electric Vehicle Type"]).size().reset_index(name="Count")
     fig = px.line(
         trend, x="Model Year", y="Count", color="Electric Vehicle Type",
@@ -95,8 +118,11 @@ def chart_adoption_trend(df):
     return fig
 
 
-def chart_range_scatter(df):
+def chart_range_scatter(df: pd.DataFrame):
     """Scatter: Electric Range vs Model Year colored by EV type."""
+    if df.empty:
+        return _empty_figure("EPA Range Dispersion Across Model Years")
+
     fig = px.scatter(
         df, x="Model Year", y="Electric Range",
         color="Electric Vehicle Type", hover_data=["Make", "Model"],
@@ -108,10 +134,16 @@ def chart_range_scatter(df):
     return fig
 
 
-def chart_range_boxplot(df):
+def chart_range_boxplot(df: pd.DataFrame):
     """Box plot: Electric Range distribution by top 8 makes."""
+    if df.empty:
+        return _empty_figure("Range Variance Across Leading Manufacturers")
+
     top8 = df["Make"].value_counts().head(8).index.tolist()
     sub = df[df["Make"].isin(top8)]
+    if sub.empty:
+        return _empty_figure("Range Variance Across Leading Manufacturers")
+
     fig = px.box(
         sub, x="Make", y="Electric Range", color="Make",
         color_discrete_sequence=DELOREAN_PALETTE,
@@ -122,10 +154,11 @@ def chart_range_boxplot(df):
     return fig
 
 
-def chart_city_bubble(df):
+def chart_city_bubble(df: pd.DataFrame):
     """Bar chart: EV count by municipality."""
-    if "City" not in df.columns:
-        return None
+    if df.empty or "City" not in df.columns:
+        return _empty_figure("Geographic Concentration by Municipality (Top 10)")
+
     city_counts = df.groupby("City").size().reset_index(name="Count")
     top_cities = city_counts.sort_values("Count", ascending=True).tail(10)
 

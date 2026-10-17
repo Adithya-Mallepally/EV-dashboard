@@ -1,8 +1,30 @@
+# Python byte-code and caches
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
+.pytest_cache/
+
+# Virtual Environments
 venv/
 .venv/
+env/
+.env/
+ENV/
+
+# Temporary / Unrelated binaries and archives
 uv/
 uv.zip
+*.zip
+*.tar.gz
+*.exe
+
+# OS and IDE files
 .DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Local Streamlit run cache (leave config intact)
+.streamlit/secrets.toml

@@ -65,6 +65,9 @@ Performance on held-out test set (1,200 vehicles):
 
 ```
 ev-dashboard/
+├── .github/
+│   └── workflows/
+│       └── ci.yml              # Automated testing & code hygiene verification
 ├── .streamlit/
 │   └── config.toml             # Native Streamlit dark theme configuration
 ├── assets/
@@ -82,6 +85,8 @@ ev-dashboard/
 │   ├── charts.py               # Plotly chart generation (DeLorean palette)
 │   ├── stats.py                # KPI computations and DeLorean cards
 │   └── tco_calculator.py       # TCO & Carbon offset simulation engine
+├── tests/
+│   └── test_dashboard.py       # Automated test suite (13 unit tests)
 ├── utils/
 │   ├── data_loader.py          # Data cleaning and loading pipeline
 │   └── ml_model.py             # Voting ensemble training and inference
