@@ -1,7 +1,7 @@
 """
 components/stats.py
 ───────────────────
-Top KPI telemetry cards rendered in the DeLorean Marketplace design system.
+Top KPI telemetry cards rendered in dark minimalist automotive design system.
 Zero emojis, zero icons. Clean typography using Maison Neue Mono and Neue Haas Grotesk.
 """
 
@@ -9,7 +9,7 @@ import streamlit as st
 
 
 def render_kpis(df):
-    """Render top KPI metric cards from filtered DataFrame in DeLorean aesthetic."""
+    """Render top KPI metric cards from filtered DataFrame in minimalist automotive aesthetic."""
     total = len(df)
     avg_range = df["Electric Range"].mean() if total > 0 else 0
     top_make = df["Make"].value_counts().idxmax() if total > 0 else "N/A"
@@ -44,10 +44,10 @@ def render_kpis(df):
     for col, kpi in zip(cols, kpis):
         with col:
             card_html = f"""
-            <div class="delorean-card">
-                <div class="delorean-card-label">{kpi['label']}</div>
-                <div class="delorean-card-value">{kpi['value']}</div>
-                <div class="delorean-card-meta">{kpi['meta']}</div>
+            <div class="telemetry-card">
+                <div class="telemetry-card-label">{kpi['label']}</div>
+                <div class="telemetry-card-value">{kpi['value']}</div>
+                <div class="telemetry-card-meta">{kpi['meta']}</div>
             </div>
             """
             st.markdown(card_html, unsafe_allow_html=True)

@@ -4,8 +4,8 @@ components/tco_calculator.py
 Total Cost of Ownership (TCO) and Environmental Carbon Offset Simulator.
 Compares lifecycle economics and emissions between electric vehicles and
 gasoline internal combustion engine (ICE) vehicles.
-Styled for DeLorean Marketplace UI: obsidian surfaces, Redshift accent,
-zero emojis, zero icons, TT Mussels and Maison Neue Mono typography.
+Dark minimalist automotive UI: obsidian surfaces, Redshift accent,
+zero emojis, zero icons, Neue Haas Grotesk and Maison Neue Mono typography.
 """
 
 import pandas as pd
@@ -88,7 +88,7 @@ def calculate_tco(
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="#141417",
         title=dict(
-            text="<span style='font-family: TTMussels, sans-serif; letter-spacing: 0.05em; font-weight: 700; color: #ffffff;'>CUMULATIVE LIFECYCLE COST PROJECTION (USD)</span>",
+            text="<span style='font-family: NeueHaasGrotesk, sans-serif; letter-spacing: 0.03em; font-weight: 700; color: #ffffff;'>CUMULATIVE LIFECYCLE COST PROJECTION (USD)</span>",
             x=0.01,
             y=0.96,
             font=dict(size=13, color="#ffffff")

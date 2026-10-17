@@ -1,22 +1,23 @@
 # EV Fleet Analytics & Total Cost of Ownership Dashboard
 
-An interactive analytics platform for exploring 8,000 Washington State Electric Vehicle registrations. Built with Python, Streamlit, Plotly, and scikit-learn. Features the DeLorean Marketplace design system with authentic typography, dark obsidian telemetry aesthetics, machine learning range forecasting, and an interactive Total Cost of Ownership (TCO) financial simulator.
+An interactive analytics platform for exploring 8,000 Washington State Electric Vehicle registrations. Built with Python, Streamlit, Plotly, and scikit-learn. Features a dark minimalist automotive telemetry interface with authentic typography, machine learning range forecasting, and an interactive Total Cost of Ownership (TCO) financial simulator.
 
 ---
 
-## User Interface & Design System: DeLorean Aesthetic
+## User Interface & Design System: Minimalist Automotive Aesthetic
 
-The user interface is modeled directly after the luxury automotive aesthetic of the DeLorean Marketplace (https://marketplace.delorean.com/):
+The user interface features a high-end dark automotive telemetry design system:
 - Authentic Typography:
-  - Display / Primary Titles: TT Mussels (Regular & Medium)
-  - Interface / Body: Neue Haas Grotesk TX Pro (Regular & Bold)
-  - Telemetry / Numeric Readouts: Maison Neue Mono
+  - Primary Interface & Titles: Neue Haas Grotesk TX Pro (Regular & Bold)
+  - Telemetry & Numeric Readouts: Maison Neue Mono
+  - Secondary Display: TT Mussels
 - Obsidian Dark Palette:
   - Background: Obsidian Carbon (#0e0e11)
   - Surface Containers: Dark Slate (#16161a) with subtle industrial borders (#27272f)
-  - Primary Accent: DeLorean Redshift (#de1e14)
+  - Primary Accent: Crimson Redshift (#de1e14)
   - Metallic Accents: Brushed Stainless Steel (#e2e8f0) and Cyber Cyan (#38bdf8)
 - Minimalist Technical Precision: Zero emojis and zero icons across all UI components, metric cards, charts, and telemetry readouts.
+
 
 ---
 
@@ -142,7 +143,7 @@ Key attributes: Make, Model, Model Year, Electric Vehicle Type, Electric Range, 
 | Layer | Library |
 |---|---|
 | Dashboard | Streamlit 1.33 |
-| Design System | DeLorean Marketplace (TT Mussels, Neue Haas Grotesk, Maison Neue Mono) |
+| Design System | Minimalist Automotive UI (Neue Haas Grotesk, Maison Neue Mono) |
 | Data Processing | Pandas 2.2, NumPy 1.26 |
 | Visualizations | Plotly Express 5.22 |
 | Machine Learning | scikit-learn 1.4 |

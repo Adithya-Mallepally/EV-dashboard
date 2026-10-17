@@ -192,3 +192,13 @@ def test_font_files_exist():
         p = os.path.join(fonts_dir, font)
         assert os.path.exists(p), f"Font file missing: {font}"
         assert os.path.getsize(p) > 10000, f"Font file too small: {font}"
+
+
+def test_no_delorean_in_user_facing_copy():
+    project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    with open(os.path.join(project_dir, "app.py"), "r", encoding="utf-8") as f:
+        app_text = f.read()
+    assert "DELOREAN MOTOR COMPANY" not in app_text
+    assert 'page_title="DeLorean' not in app_text
+    assert "<span>DELOREAN</span>" not in app_text
+

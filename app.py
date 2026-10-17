@@ -1,11 +1,11 @@
 """
 app.py
 ──────
-EV Fleet Analytics Dashboard — DeLorean Design System Interface.
-Authentic aesthetic modeled directly from https://marketplace.delorean.com/
-- Fonts: TT Mussels (Display), Neue Haas Grotesk (Body/UI), Maison Neue Mono (Data/Telemetry)
-- Color Scheme: Obsidian Dark (#0e0e11), Carbon Surface (#16161a), DeLorean Redshift (#de1e14),
-  Brushed Steel (#e2e8f0), Slate Borders (#27272f)
+EV Fleet Analytics Dashboard — Minimalist Automotive Interface.
+- Fonts: Neue Haas Grotesk TX Pro (Primary Interface, Headings & Body),
+  Maison Neue Mono (Data, Telemetry, Labels, Badges, Metrics)
+- Color Scheme: Obsidian Dark (#0e0e11), Carbon Surface (#16161a), Crimson Redshift (#de1e14),
+  Brushed Stainless Steel (#e2e8f0), Slate Borders (#27272f)
 - Zero emojis, zero icons across all UI elements.
 - Resilient error handling and dynamic telemetry filtering.
 """
@@ -15,7 +15,7 @@ import pandas as pd
 
 from utils.data_loader import load_data
 from utils.ml_model import train_model, predict_range
-from components.theme import inject_delorean_theme
+from components.theme import inject_theme
 from components.filters import render_filters
 from components.stats import render_kpis
 from components.charts import (
@@ -26,13 +26,13 @@ from components.tco_calculator import calculate_tco
 
 # ── Page Configuration ─────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="DeLorean // EV Fleet Analytics",
+    page_title="EV Fleet Analytics Platform",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# ── Inject DeLorean Design System (Fonts, Colors, Obsidian Stylesheet) ────────
-inject_delorean_theme()
+# ── Inject Minimalist Automotive Theme (Fonts, Colors, Obsidian Surface) ──────
+inject_theme()
 
 # ── Data Loading & Model Training ─────────────────────────────────────────────
 @st.cache_data
@@ -51,12 +51,12 @@ filtered_df = render_filters(df)
 
 # ── Main Header ───────────────────────────────────────────────────────────────
 st.markdown("""
-<div class="delorean-header">
-    <div class="delorean-eyebrow">
-        <span>DELOREAN</span> // <span>FLEET TELEMETRY & ANALYTICS</span> // <span style="color: #a1a1aa;">DATABASE STATUS: ACTIVE</span>
+<div class="telemetry-header">
+    <div class="telemetry-eyebrow">
+        <span>FLEET TELEMETRY & ANALYTICS</span> // <span style="color: #a1a1aa;">DATABASE STATUS: ACTIVE (8,000 RECORDS)</span>
     </div>
-    <div class="delorean-title">EV FLEET ANALYTICS PLATFORM</div>
-    <div class="delorean-subtitle">
+    <div class="telemetry-title">EV FLEET ANALYTICS PLATFORM</div>
+    <div class="telemetry-subtitle">
         High-fidelity telemetry, fleet distribution, ensemble machine learning range forecasting,
         and lifecycle ownership economics across 8,000 Washington State electric vehicle registrations.
     </div>
@@ -70,8 +70,8 @@ st.markdown("<hr>", unsafe_allow_html=True)
 
 # ── Visual Telemetry & Fleet Distribution ─────────────────────────────────────
 st.markdown("""
-<div class="delorean-section-header">TELEMETRY & FLEET DISTRIBUTION</div>
-<div class="delorean-section-sub">Cross-sectional volume, propulsion split, and range dispersion across active vehicles.</div>
+<div class="telemetry-section-header">TELEMETRY & FLEET DISTRIBUTION</div>
+<div class="telemetry-section-sub">Cross-sectional volume, propulsion split, and range dispersion across active vehicles.</div>
 """, unsafe_allow_html=True)
 
 if filtered_df.empty:
@@ -109,8 +109,8 @@ st.markdown("<hr>", unsafe_allow_html=True)
 
 # ── Machine Learning Range Predictor ──────────────────────────────────────────
 st.markdown("""
-<div class="delorean-section-header">MACHINE LEARNING RANGE PREDICTOR</div>
-<div class="delorean-section-sub">Voting Ensemble (Random Forest + Gradient Boosting) trained on 6,800 historical EV specifications.</div>
+<div class="telemetry-section-header">MACHINE LEARNING RANGE PREDICTOR</div>
+<div class="telemetry-section-sub">Voting Ensemble (Random Forest + Gradient Boosting) trained on 6,800 historical EV specifications.</div>
 """, unsafe_allow_html=True)
 
 r2_val = metrics.get("R2 Score", metrics.get("R² Score", 0.985))
@@ -119,26 +119,26 @@ mae_val = metrics.get("MAE (miles)", 11.3)
 mc1, mc2, mc3 = st.columns(3)
 with mc1:
     st.markdown(f"""
-    <div class="delorean-card">
-        <div class="delorean-card-label">MODEL ARCHITECTURE</div>
+    <div class="telemetry-card">
+        <div class="telemetry-card-label">MODEL ARCHITECTURE</div>
         <div style="font-family: 'NeueHaasGrotesk', sans-serif; font-size: 18px; font-weight: 700; color: #ffffff; margin-top: 4px;">RANDOM FOREST + GRADIENT BOOSTING</div>
-        <div class="delorean-card-meta">VOTING REGRESSOR ENSEMBLE</div>
+        <div class="telemetry-card-meta">VOTING REGRESSOR ENSEMBLE</div>
     </div>
     """, unsafe_allow_html=True)
 with mc2:
     st.markdown(f"""
-    <div class="delorean-card">
-        <div class="delorean-card-label">COEFFICIENT OF DETERMINATION (R2)</div>
-        <div class="delorean-card-value">{r2_val}</div>
-        <div class="delorean-card-meta">HELD-OUT TEST SET ACCURACY</div>
+    <div class="telemetry-card">
+        <div class="telemetry-card-label">COEFFICIENT OF DETERMINATION (R2)</div>
+        <div class="telemetry-card-value">{r2_val}</div>
+        <div class="telemetry-card-meta">HELD-OUT TEST SET ACCURACY</div>
     </div>
     """, unsafe_allow_html=True)
 with mc3:
     st.markdown(f"""
-    <div class="delorean-card">
-        <div class="delorean-card-label">MEAN ABSOLUTE ERROR</div>
-        <div class="delorean-card-value">{mae_val} MI</div>
-        <div class="delorean-card-meta">AVERAGE ABSOLUTE DEVIATION</div>
+    <div class="telemetry-card">
+        <div class="telemetry-card-label">MEAN ABSOLUTE ERROR</div>
+        <div class="telemetry-card-value">{mae_val} MI</div>
+        <div class="telemetry-card-meta">AVERAGE ABSOLUTE DEVIATION</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -189,8 +189,8 @@ st.markdown("<hr>", unsafe_allow_html=True)
 
 # ── Total Cost of Ownership (TCO) Simulator ──────────────────────────────────
 st.markdown("""
-<div class="delorean-section-header">TOTAL COST OF OWNERSHIP & CARBON OFFSET SIMULATOR</div>
-<div class="delorean-section-sub">Comparative multi-year operational economics and greenhouse gas emissions versus internal combustion baseline.</div>
+<div class="telemetry-section-header">TOTAL COST OF OWNERSHIP & CARBON OFFSET SIMULATOR</div>
+<div class="telemetry-section-sub">Comparative multi-year operational economics and greenhouse gas emissions versus internal combustion baseline.</div>
 """, unsafe_allow_html=True)
 
 tco_col1, tco_col2, tco_col3, tco_col4 = st.columns(4)
@@ -210,26 +210,26 @@ st.plotly_chart(tco_res["fig"], use_container_width=True)
 kpi1, kpi2, kpi3 = st.columns(3)
 with kpi1:
     st.markdown(f"""
-    <div class="delorean-card">
-        <div class="delorean-card-label">NET PROJECTED SAVINGS</div>
-        <div class="delorean-card-value">${tco_res['net_savings']:,.2f}</div>
-        <div class="delorean-card-meta">CUMULATIVE {years_input}-YEAR BENEFIT</div>
+    <div class="telemetry-card">
+        <div class="telemetry-card-label">NET PROJECTED SAVINGS</div>
+        <div class="telemetry-card-value">${tco_res['net_savings']:,.2f}</div>
+        <div class="telemetry-card-meta">CUMULATIVE {years_input}-YEAR BENEFIT</div>
     </div>
     """, unsafe_allow_html=True)
 with kpi2:
     st.markdown(f"""
-    <div class="delorean-card">
-        <div class="delorean-card-label">LIFETIME CO2 ABATEMENT</div>
-        <div class="delorean-card-value">{tco_res['co2_saved_tons']} TONS</div>
-        <div class="delorean-card-meta">EMISSIONS AVOIDED VS ICE</div>
+    <div class="telemetry-card">
+        <div class="telemetry-card-label">LIFETIME CO2 ABATEMENT</div>
+        <div class="telemetry-card-value">{tco_res['co2_saved_tons']} TONS</div>
+        <div class="telemetry-card-meta">EMISSIONS AVOIDED VS ICE</div>
     </div>
     """, unsafe_allow_html=True)
 with kpi3:
     st.markdown(f"""
-    <div class="delorean-card">
-        <div class="delorean-card-label">ANNUAL FUEL COST REDUCTION</div>
-        <div class="delorean-card-value">${tco_res['annual_fuel_savings']:,.2f}/YR</div>
-        <div class="delorean-card-meta">ELECTRICITY VS GASOLINE</div>
+    <div class="telemetry-card">
+        <div class="telemetry-card-label">ANNUAL FUEL COST REDUCTION</div>
+        <div class="telemetry-card-value">${tco_res['annual_fuel_savings']:,.2f}/YR</div>
+        <div class="telemetry-card-meta">ELECTRICITY VS GASOLINE</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -237,8 +237,8 @@ st.markdown("<hr>", unsafe_allow_html=True)
 
 # ── Tabular Data Records ──────────────────────────────────────────────────────
 st.markdown("""
-<div class="delorean-section-header">REGISTRATION FLEET RECORDS</div>
-<div class="delorean-section-sub">Direct access to filtered tabular data records.</div>
+<div class="telemetry-section-header">REGISTRATION FLEET RECORDS</div>
+<div class="telemetry-section-sub">Direct access to filtered tabular data records.</div>
 """, unsafe_allow_html=True)
 
 if st.checkbox("DISPLAY RAW REGISTRATION DATA TABLE"):
@@ -247,13 +247,13 @@ if st.checkbox("DISPLAY RAW REGISTRATION DATA TABLE"):
 
 export_df = filtered_df.drop(columns=["EV Type Short"], errors="ignore")
 csv = export_df.to_csv(index=False).encode("utf-8")
-st.download_button("EXPORT FILTERED DATASET (CSV)", csv, "ev_filtered_delorean.csv", "text/csv")
+st.download_button("EXPORT FILTERED DATASET (CSV)", csv, "ev_filtered_fleet.csv", "text/csv")
 
-# ── DeLorean Industrial Footer ────────────────────────────────────────────────
+# ── Automotive Telemetry Footer ───────────────────────────────────────────────
 st.markdown("""
-<div class="delorean-footer">
-    <div>DELOREAN MOTOR COMPANY // ADVANCED FLEET ANALYTICS ENGINE</div>
+<div class="telemetry-footer">
+    <div>WASHINGTON STATE EV FLEET ANALYTICS PLATFORM</div>
     <div style="margin-top: 4px; color: #52525b;">DATA SOURCE: WASHINGTON STATE DEPARTMENT OF LICENSING // 8,000 REGISTRATION VECTORS</div>
-    <div style="margin-top: 4px; color: #3f3f46;">POWERED BY PYTHON, STREAMLIT, PLOTLY & SCIKIT-LEARN // ZERO EMOJIS // INDUSTRIAL AUTOMOTIVE UI</div>
+    <div style="margin-top: 4px; color: #3f3f46;">POWERED BY PYTHON, STREAMLIT, PLOTLY & SCIKIT-LEARN // ZERO EMOJIS // MINIMALIST AUTOMOTIVE UI</div>
 </div>
 """, unsafe_allow_html=True)

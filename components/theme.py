@@ -1,13 +1,12 @@
 """
 components/theme.py
 ───────────────────
-DeLorean Marketplace visual design system.
-Replicates the aesthetic of https://marketplace.delorean.com/
-- Fonts: Neue Haas Grotesk TX Pro (Primary Display, Headings & Body),
-  Maison Neue Mono (Data, Telemetry, Labels, Badges),
-  TT Mussels (Secondary Automotive Display)
-- Color Palette: Obsidian Dark (#0e0e11), Carbon Surface (#16161a), DeLorean Redshift (#de1e14),
-  Brushed Steel (#e2e8f0), Slate Borders (#27272f)
+High-end dark minimalist automotive visual design system.
+- Typography: Neue Haas Grotesk TX Pro (Primary Interface, Titles & Body),
+  Maison Neue Mono (Data, Telemetry, Labels, Badges, Metrics),
+  TT Mussels (Secondary Display)
+- Color Palette: Obsidian Dark (#0e0e11), Carbon Surface (#16161a), Crimson Redshift (#de1e14),
+  Brushed Stainless Steel (#e2e8f0), Slate Borders (#27272f)
 - Zero emojis and zero icons across all UI elements.
 - Header layout engineered to eliminate clipping with fixed viewport spacing.
 """
@@ -28,8 +27,8 @@ def _load_font_b64(filename: str) -> str:
     return ""
 
 
-def get_delorean_css() -> str:
-    """Generate the full CSS stylesheet replicating DeLorean Marketplace."""
+def get_theme_css() -> str:
+    """Generate the full CSS stylesheet for the dark minimalist automotive interface."""
     nhg_b64 = _load_font_b64("NeueHaasGrotesk.ttf")
     nhg_bold_b64 = _load_font_b64("NeueHaasGroteskBold.ttf")
     ttm_b64 = _load_font_b64("TTMussels.otf")
@@ -109,7 +108,7 @@ def get_delorean_css() -> str:
         -moz-osx-font-smoothing: grayscale;
     }}
 
-    /* ── Sidebar Expand/Collapse Control: No Icons, Pure DeLorean Text ── */
+    /* ── Sidebar Expand/Collapse Control: No Icons, Pure Text Button ─── */
     div[data-testid="collapsedControl"] button,
     button[data-testid="stSidebarCollapseButton"] {{
         background-color: #16161a !important;
@@ -141,7 +140,7 @@ def get_delorean_css() -> str:
         letter-spacing: 0.12em !important;
     }}
 
-    /* ── Typography (Authentic DeLorean Swiss Grotesque) ──────────────── */
+    /* ── Typography (Swiss Grotesque Architecture) ────────────────────── */
     h1, h2, h3, h4, h5, h6 {{
         font-family: 'NeueHaasGrotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
         text-transform: uppercase !important;
@@ -164,7 +163,7 @@ def get_delorean_css() -> str:
         margin: 2rem 0 !important;
     }}
 
-    /* ── Sidebar (DeLorean Obsidian) ─────────────────────────────────── */
+    /* ── Sidebar (Obsidian Surface) ──────────────────────────────────── */
     section[data-testid="stSidebar"] {{
         background-color: #0a0a0d !important;
         border-right: 1px solid #232328 !important;
@@ -221,7 +220,7 @@ def get_delorean_css() -> str:
         line-height: 1.1 !important;
     }}
 
-    /* ── Form Controls & Inputs (DeLorean Industrial) ─────────────────── */
+    /* ── Form Controls & Inputs (Dark Industrial) ─────────────────────── */
     input, select, textarea, div[data-baseweb="select"] > div {{
         background-color: #16161a !important;
         border: 1px solid #282830 !important;
@@ -247,7 +246,7 @@ def get_delorean_css() -> str:
         color: #ffffff !important;
     }}
 
-    /* ── Buttons (DeLorean Redshift Accent) ────────────────────────────── */
+    /* ── Buttons (Crimson Redshift Accent) ────────────────────────────── */
     button[kind="primary"],
     button[data-testid="baseButton-primary"] {{
         background-color: #de1e14 !important;
@@ -290,7 +289,7 @@ def get_delorean_css() -> str:
         color: #ffffff !important;
     }}
 
-    /* ── Sliders (DeLorean Precision Track) ────────────────────────────── */
+    /* ── Sliders (Precision Track) ────────────────────────────────────── */
     div[data-testid="stSlider"] div[role="slider"] {{
         background-color: #de1e14 !important;
         border: 2px solid #ffffff !important;
@@ -326,15 +325,15 @@ def get_delorean_css() -> str:
         display: none !important;
     }}
 
-    /* ── Custom DeLorean Header & Cards ───────────────────────────────── */
-    .delorean-header {{
+    /* ── Telemetry Header & Metric Cards ──────────────────────────────── */
+    .telemetry-header, .delorean-header {{
         border-bottom: 1px solid #232328;
         padding-bottom: 1.5rem;
         margin-bottom: 2rem;
         margin-top: 0.5rem;
     }}
 
-    .delorean-eyebrow {{
+    .telemetry-eyebrow, .delorean-eyebrow {{
         font-family: 'MaisonNeueMono', monospace;
         font-size: 11px;
         text-transform: uppercase;
@@ -345,7 +344,7 @@ def get_delorean_css() -> str:
         line-height: 1.4;
     }}
 
-    .delorean-title {{
+    .telemetry-title, .delorean-title {{
         font-family: 'NeueHaasGrotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif;
         font-size: 38px;
         font-weight: 700;
@@ -356,7 +355,7 @@ def get_delorean_css() -> str:
         line-height: 1.15;
     }}
 
-    .delorean-subtitle {{
+    .telemetry-subtitle, .delorean-subtitle {{
         font-family: 'NeueHaasGrotesk', sans-serif;
         font-size: 15px;
         color: #a1a1aa;
@@ -364,7 +363,7 @@ def get_delorean_css() -> str:
         max-width: 920px;
     }}
 
-    .delorean-card {{
+    .telemetry-card, .delorean-card {{
         background: #16161a;
         border: 1px solid #27272f;
         border-top: 2px solid #de1e14;
@@ -375,12 +374,12 @@ def get_delorean_css() -> str:
         transition: border-color 0.2s ease;
     }}
 
-    .delorean-card:hover {{
+    .telemetry-card:hover, .delorean-card:hover {{
         border-color: #3d3f47;
         border-top: 2px solid #de1e14;
     }}
 
-    .delorean-card-label {{
+    .telemetry-card-label, .delorean-card-label {{
         font-family: 'MaisonNeueMono', monospace;
         font-size: 11px;
         text-transform: uppercase;
@@ -389,7 +388,7 @@ def get_delorean_css() -> str:
         margin-bottom: 6px;
     }}
 
-    .delorean-card-value {{
+    .telemetry-card-value, .delorean-card-value {{
         font-family: 'NeueHaasGrotesk', sans-serif;
         font-size: 32px;
         font-weight: 700;
@@ -398,14 +397,14 @@ def get_delorean_css() -> str:
         line-height: 1.1;
     }}
 
-    .delorean-card-meta {{
+    .telemetry-card-meta, .delorean-card-meta {{
         font-family: 'MaisonNeueMono', monospace;
         font-size: 11px;
         color: #71717a;
         margin-top: 6px;
     }}
 
-    .delorean-section-header {{
+    .telemetry-section-header, .delorean-section-header {{
         font-family: 'NeueHaasGrotesk', sans-serif;
         font-size: 18px;
         font-weight: 700;
@@ -415,14 +414,14 @@ def get_delorean_css() -> str:
         margin: 1.5rem 0 0.25rem 0;
     }}
 
-    .delorean-section-sub {{
+    .telemetry-section-sub, .delorean-section-sub {{
         font-family: 'NeueHaasGrotesk', sans-serif;
         font-size: 13px;
         color: #8e8e98;
         margin-bottom: 1.25rem;
     }}
 
-    .delorean-footer {{
+    .telemetry-footer, .delorean-footer {{
         border-top: 1px solid #232328;
         padding-top: 2rem;
         margin-top: 3rem;
@@ -441,6 +440,13 @@ def get_delorean_css() -> str:
     """
 
 
-def inject_delorean_theme():
-    """Injects DeLorean design system stylesheet into the Streamlit app."""
-    st.markdown(get_delorean_css(), unsafe_allow_html=True)
+# Backward-compatible aliases
+get_delorean_css = get_theme_css
+
+
+def inject_theme():
+    """Injects minimalist automotive design system stylesheet into the Streamlit app."""
+    st.markdown(get_theme_css(), unsafe_allow_html=True)
+
+
+inject_delorean_theme = inject_theme

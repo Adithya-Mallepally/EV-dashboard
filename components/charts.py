@@ -1,9 +1,9 @@
 """
 components/charts.py
 ────────────────────
-Plotly visualization engine styled with the DeLorean Marketplace design system.
-Dark obsidian surfaces (#141417), DeLorean Redshift (#de1e14) and brushed steel palette,
-Neue Haas Grotesk and TT Mussels typography, zero emojis and zero icons.
+Plotly visualization engine styled with a dark minimalist automotive design system.
+Dark obsidian surfaces (#141417), Crimson Redshift (#de1e14) and brushed steel palette,
+Neue Haas Grotesk typography, zero emojis and zero icons.
 Fault-tolerant rendering with elegant empty-state handling.
 """
 
@@ -11,9 +11,9 @@ import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
 
-# DeLorean Automotive Color Palette
-DELOREAN_PALETTE = [
-    "#de1e14",  # DeLorean Redshift (Taillight Crimson)
+# Minimalist Automotive Color Palette
+AUTOMOTIVE_PALETTE = [
+    "#de1e14",  # Crimson Redshift Accent
     "#e2e8f0",  # Brushed Stainless Steel
     "#38bdf8",  # Electric Cyan
     "#94a3b8",  # Slate Metallic
@@ -25,15 +25,17 @@ DELOREAN_PALETTE = [
     "#06b6d4",  # Cyan Glow
 ]
 
+DELOREAN_PALETTE = AUTOMOTIVE_PALETTE
 
-def _apply_delorean_layout(fig, title_text: str):
-    """Apply consistent DeLorean Marketplace theme to a Plotly figure."""
+
+def _apply_automotive_layout(fig, title_text: str):
+    """Apply consistent minimalist automotive theme to a Plotly figure."""
     fig.update_layout(
         template="plotly_dark",
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="#141417",
         title=dict(
-            text=f"<span style='font-family: TTMussels, sans-serif; letter-spacing: 0.05em; font-weight: 700; color: #ffffff;'>{title_text.upper()}</span>",
+            text=f"<span style='font-family: NeueHaasGrotesk, sans-serif; letter-spacing: 0.03em; font-weight: 700; color: #ffffff;'>{title_text.upper()}</span>",
             x=0.01,
             y=0.96,
             font=dict(size=13, color="#ffffff")
@@ -71,10 +73,13 @@ def _apply_delorean_layout(fig, title_text: str):
     return fig
 
 
+_apply_delorean_layout = _apply_automotive_layout
+
+
 def _empty_figure(title_text: str):
     """Produce a graceful empty-state chart when filters produce zero records."""
     fig = go.Figure()
-    _apply_delorean_layout(fig, title_text)
+    _apply_automotive_layout(fig, title_text)
     fig.add_annotation(
         text="NO TELEMETRY RECORDS MATCH CURRENT FILTER SELECTION",
         xref="paper", yref="paper",
@@ -95,10 +100,10 @@ def chart_top_makes(df: pd.DataFrame):
     counts.columns = ["Make", "Count"]
     fig = px.bar(
         counts, x="Make", y="Count", color="Make",
-        color_discrete_sequence=DELOREAN_PALETTE,
+        color_discrete_sequence=AUTOMOTIVE_PALETTE,
         labels={"Count": "FLEET COUNT", "Make": "MANUFACTURER"}
     )
-    _apply_delorean_layout(fig, "Top 10 Manufacturers by Fleet Volume")
+    _apply_automotive_layout(fig, "Top 10 Manufacturers by Fleet Volume")
     fig.update_layout(showlegend=False)
     return fig
 
@@ -111,10 +116,10 @@ def chart_adoption_trend(df: pd.DataFrame):
     trend = df.groupby(["Model Year", "Electric Vehicle Type"]).size().reset_index(name="Count")
     fig = px.line(
         trend, x="Model Year", y="Count", color="Electric Vehicle Type",
-        markers=True, color_discrete_sequence=[DELOREAN_PALETTE[0], DELOREAN_PALETTE[2]],
+        markers=True, color_discrete_sequence=[AUTOMOTIVE_PALETTE[0], AUTOMOTIVE_PALETTE[2]],
         labels={"Count": "ANNUAL REGISTRATIONS", "Model Year": "MODEL YEAR", "Electric Vehicle Type": "PROPULSION ARCHITECTURE"}
     )
-    _apply_delorean_layout(fig, "Registration Trajectory by Propulsion Type")
+    _apply_automotive_layout(fig, "Registration Trajectory by Propulsion Type")
     return fig
 
 
@@ -126,11 +131,11 @@ def chart_range_scatter(df: pd.DataFrame):
     fig = px.scatter(
         df, x="Model Year", y="Electric Range",
         color="Electric Vehicle Type", hover_data=["Make", "Model"],
-        color_discrete_sequence=[DELOREAN_PALETTE[0], DELOREAN_PALETTE[2]],
+        color_discrete_sequence=[AUTOMOTIVE_PALETTE[0], AUTOMOTIVE_PALETTE[2]],
         opacity=0.75,
         labels={"Electric Range": "EPA RANGE (MILES)", "Model Year": "MODEL YEAR", "Electric Vehicle Type": "PROPULSION"}
     )
-    _apply_delorean_layout(fig, "EPA Range Dispersion Across Model Years")
+    _apply_automotive_layout(fig, "EPA Range Dispersion Across Model Years")
     return fig
 
 
@@ -146,10 +151,10 @@ def chart_range_boxplot(df: pd.DataFrame):
 
     fig = px.box(
         sub, x="Make", y="Electric Range", color="Make",
-        color_discrete_sequence=DELOREAN_PALETTE,
+        color_discrete_sequence=AUTOMOTIVE_PALETTE,
         labels={"Electric Range": "EPA RANGE (MILES)", "Make": "MANUFACTURER"}
     )
-    _apply_delorean_layout(fig, "Range Variance Across Leading Manufacturers")
+    _apply_automotive_layout(fig, "Range Variance Across Leading Manufacturers")
     fig.update_layout(showlegend=False)
     return fig
 
@@ -175,7 +180,7 @@ def chart_city_bubble(df: pd.DataFrame):
         color="Count", color_continuous_scale=redshift_scale,
         labels={"Count": "REGISTERED VEHICLES", "City": "MUNICIPALITY"}
     )
-    _apply_delorean_layout(fig, "Geographic Concentration by Municipality (Top 10)")
+    _apply_automotive_layout(fig, "Geographic Concentration by Municipality (Top 10)")
     fig.update_coloraxes(colorbar=dict(
         title=dict(text="FLEET SIZE", font=dict(family="'MaisonNeueMono', monospace", size=10, color="#8e8e98")),
         tickfont=dict(family="'MaisonNeueMono', monospace", size=10, color="#8e8e98")
