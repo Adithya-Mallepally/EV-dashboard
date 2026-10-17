@@ -1,7 +1,7 @@
 """
 components/filters.py
 ─────────────────────
-Sidebar filter controls styled in the DeLorean design system.
+Sidebar filter controls styled in the dark automotive telemetry design system.
 Zero emojis, zero icons. Technical labels in Neue Haas Grotesk and Maison Neue Mono.
 """
 

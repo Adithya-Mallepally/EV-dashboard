@@ -72,7 +72,7 @@ ev-dashboard/
 ├── .streamlit/
 │   └── config.toml             # Native Streamlit dark theme configuration
 ├── assets/
-│   └── fonts/                  # Authentic DeLorean webfonts
+│   └── fonts/                  # Authentic automotive webfonts
 │       ├── NeueHaasGrotesk.ttf
 │       ├── NeueHaasGroteskBold.ttf
 │       ├── TTMussels.otf
@@ -81,19 +81,44 @@ ev-dashboard/
 ├── data/
 │   └── ev_data.csv             # 8,000-row EV registration dataset
 ├── components/
-│   ├── theme.py                # DeLorean design system and font injection
+│   ├── theme.py                # Automotive telemetry design system & font injection
 │   ├── filters.py              # Sidebar filter logic
-│   ├── charts.py               # Plotly chart generation (DeLorean palette)
-│   ├── stats.py                # KPI computations and DeLorean cards
+│   ├── charts.py               # Plotly chart generation (dark obsidian palette)
+│   ├── stats.py                # KPI computations and telemetry metric cards
 │   └── tco_calculator.py       # TCO & Carbon offset simulation engine
 ├── tests/
-│   └── test_dashboard.py       # Automated test suite (13 unit tests)
+│   ├── conftest.py             # Test discovery and module anchoring
+│   └── test_dashboard.py       # Automated test suite (20 unit tests)
 ├── utils/
 │   ├── data_loader.py          # Data cleaning and loading pipeline
 │   └── ml_model.py             # Voting ensemble training and inference
+├── TEST_REPORT.md              # Comprehensive test execution & validation report
 ├── requirements.txt
 └── README.md
 ```
+
+---
+
+## Automated Test Coverage & Verification
+
+All test suites execute via pytest with 100% pass rate:
+
+```bash
+python -m pytest -v tests/test_dashboard.py
+```
+
+| Test Domain | Tests | Scope | Status |
+|---|---|---|---|
+| Data Ingestion & Integrity | 4 | 8,000 records verification, column schemas, data cleaning, multi-parameter filtering | Passed |
+| Machine Learning Pipeline | 4 | Ensemble accuracy (R2 > 0.95), feature matrix encoding, deterministic & unseen inference | Passed |
+| Plotly Visualizations | 3 | 5 analytical charts generation, empty-state fallback resilience, automotive layout styling | Passed |
+| TCO Financial Simulator | 3 | 10-year lifecycle simulation, boundary condition handling, monotonic savings verification | Passed |
+| Telemetry KPI Readouts | 1 | Real-time fleet population, mean range, leading make, and BEV market share accuracy | Passed |
+| Zero Emojis & Zero Icons | 2 | Unicode codebase scan, icon library audit, strictly technical typography | Passed |
+| Design System & Typography | 3 | CSS stylesheet variables, physical font asset integrity, clean copy verification | Passed |
+| **Total** | **20** | **Comprehensive end-to-end coverage across data, ML, UI, and design compliance** | **20 Passed, 0 Failed** |
+
+Detailed assertion documentation and performance metrics are recorded in [TEST_REPORT.md](TEST_REPORT.md).
 
 ---
 
