@@ -1,13 +1,14 @@
 """
-tco_calculator.py
-─────────────────
+components/tco_calculator.py
+────────────────────────────
 Total Cost of Ownership (TCO) and Environmental Carbon Offset Simulator.
 Compares lifecycle economics and emissions between electric vehicles and
 gasoline internal combustion engine (ICE) vehicles.
+Styled for DeLorean Marketplace UI: obsidian surfaces, Redshift accent,
+zero emojis, zero icons, TT Mussels and Maison Neue Mono typography.
 """
 
 import pandas as pd
-import plotly.express as px
 import plotly.graph_objects as go
 
 
@@ -60,22 +61,64 @@ def calculate_tco(
     fig.add_trace(go.Scatter(
         x=timeline, y=cumulative_ice,
         mode="lines+markers",
-        name="Gasoline ICE Vehicle",
-        line=dict(color="#d9381e", width=3)
+        name="Gasoline ICE Baseline",
+        line=dict(color="#71717a", width=2.5, dash="dash"),
+        marker=dict(size=7, color="#a1a1aa")
     ))
     fig.add_trace(go.Scatter(
         x=timeline, y=cumulative_ev,
         mode="lines+markers",
         name="Electric Vehicle (EV)",
-        line=dict(color="#1a73e8", width=3)
+        line=dict(color="#de1e14", width=3),
+        marker=dict(size=8, color="#de1e14")
     ))
 
     fig.update_layout(
-        title="Cumulative Total Cost of Ownership (TCO) Progression",
-        xaxis_title="Ownership Duration (Years)",
-        yaxis_title="Total Cumulative Cost ($ USD)",
-        template="plotly_white",
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+        template="plotly_dark",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="#141417",
+        title=dict(
+            text="<span style='font-family: TTMussels, sans-serif; letter-spacing: 0.05em; font-weight: 700; color: #ffffff;'>CUMULATIVE LIFECYCLE COST PROJECTION (USD)</span>",
+            x=0.01,
+            y=0.96,
+            font=dict(size=13, color="#ffffff")
+        ),
+        font=dict(
+            family="'NeueHaasGrotesk', 'Helvetica Neue', Arial, sans-serif",
+            color="#a1a1aa",
+            size=12
+        ),
+        xaxis=dict(
+            title="OWNERSHIP HORIZON (YEARS)",
+            gridcolor="#222228",
+            zerolinecolor="#2e2e38",
+            linecolor="#2c2c34",
+            tickfont=dict(family="'MaisonNeueMono', monospace", size=11, color="#8e8e98")
+        ),
+        yaxis=dict(
+            title="CUMULATIVE EXPENDITURE ($ USD)",
+            gridcolor="#222228",
+            zerolinecolor="#2e2e38",
+            linecolor="#2c2c34",
+            tickfont=dict(family="'MaisonNeueMono', monospace", size=11, color="#8e8e98")
+        ),
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1,
+            font=dict(family="'MaisonNeueMono', monospace", size=11, color="#d4d4d8"),
+            bgcolor="rgba(22, 22, 26, 0.7)",
+            bordercolor="#27272f",
+            borderwidth=1
+        ),
+        hoverlabel=dict(
+            bgcolor="#18181d",
+            bordercolor="#3d3f47",
+            font=dict(family="'MaisonNeueMono', monospace", size=12, color="#ffffff")
+        ),
+        margin=dict(l=40, r=20, t=50, b=40)
     )
 
     return {

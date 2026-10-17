@@ -1,6 +1,22 @@
 # EV Fleet Analytics & Total Cost of Ownership Dashboard
 
-An interactive analytics platform for exploring 8,000 Washington State Electric Vehicle registrations. Built with Python, Streamlit, Plotly, and scikit-learn. Combines fleet data engineering, interactive telemetry visualizations, machine learning range prediction, and an interactive Total Cost of Ownership (TCO) financial simulator.
+An interactive analytics platform for exploring 8,000 Washington State Electric Vehicle registrations. Built with Python, Streamlit, Plotly, and scikit-learn. Features the DeLorean Marketplace design system with authentic typography, dark obsidian telemetry aesthetics, machine learning range forecasting, and an interactive Total Cost of Ownership (TCO) financial simulator.
+
+---
+
+## User Interface & Design System: DeLorean Aesthetic
+
+The user interface is modeled directly after the luxury automotive aesthetic of the DeLorean Marketplace (https://marketplace.delorean.com/):
+- Authentic Typography:
+  - Display / Primary Titles: TT Mussels (Regular & Medium)
+  - Interface / Body: Neue Haas Grotesk TX Pro (Regular & Bold)
+  - Telemetry / Numeric Readouts: Maison Neue Mono
+- Obsidian Dark Palette:
+  - Background: Obsidian Carbon (#0e0e11)
+  - Surface Containers: Dark Slate (#16161a) with subtle industrial borders (#27272f)
+  - Primary Accent: DeLorean Redshift (#de1e14)
+  - Metallic Accents: Brushed Stainless Steel (#e2e8f0) and Cyber Cyan (#38bdf8)
+- Minimalist Technical Precision: Zero emojis and zero icons across all UI components, metric cards, charts, and telemetry readouts.
 
 ---
 
@@ -15,7 +31,7 @@ In addition to standard registration analytics, the dashboard includes an intera
 
 ## Features
 
-- Interactive filters: Filter by Make, EV Type, Model Year, and Electric Range
+- Interactive filters: Filter by Manufacturer, Propulsion Type, Model Year Horizon, and Electric Range
 - KPI summary cards: Live counts of fleet size, average range, leading manufacturer, and BEV market share
 - Five Plotly analytical charts: Distribution bar chart, adoption trajectory, range vs MSRP scatter, box plot, and geographic bubble map
 - Ensemble ML Range Predictor: Voting regressor combining Random Forest and Gradient Boosting to predict range from vehicle specifications
@@ -49,13 +65,22 @@ Performance on held-out test set (1,200 vehicles):
 
 ```
 ev-dashboard/
+├── .streamlit/
+│   └── config.toml             # Native Streamlit dark theme configuration
+├── assets/
+│   └── fonts/                  # Authentic DeLorean webfonts
+│       ├── NeueHaasGrotesk.ttf
+│       ├── NeueHaasGroteskBold.ttf
+│       ├── TTMussels.otf
+│       └── MaisonNeueMono.otf
 ├── app.py                      # Main Streamlit application entry point
 ├── data/
 │   └── ev_data.csv             # 8,000-row EV registration dataset
 ├── components/
+│   ├── theme.py                # DeLorean design system and font injection
 │   ├── filters.py              # Sidebar filter logic
-│   ├── charts.py               # Plotly chart generation
-│   ├── stats.py                # KPI computations
+│   ├── charts.py               # Plotly chart generation (DeLorean palette)
+│   ├── stats.py                # KPI computations and DeLorean cards
 │   └── tco_calculator.py       # TCO & Carbon offset simulation engine
 ├── utils/
 │   ├── data_loader.py          # Data cleaning and loading pipeline
@@ -112,6 +137,7 @@ Key attributes: Make, Model, Model Year, Electric Vehicle Type, Electric Range, 
 | Layer | Library |
 |---|---|
 | Dashboard | Streamlit 1.33 |
+| Design System | DeLorean Marketplace (TT Mussels, Neue Haas Grotesk, Maison Neue Mono) |
 | Data Processing | Pandas 2.2, NumPy 1.26 |
 | Visualizations | Plotly Express 5.22 |
 | Machine Learning | scikit-learn 1.4 |
