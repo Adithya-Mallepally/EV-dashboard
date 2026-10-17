@@ -14,7 +14,7 @@ def render_filters(df):
     <div style="font-family: 'MaisonNeueMono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #de1e14; text-transform: uppercase; margin-bottom: 4px;">
         TELEMETRY CONTROLS
     </div>
-    <div style="font-family: 'TTMussels', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.06em; color: #ffffff; text-transform: uppercase; margin-bottom: 1rem;">
+    <div style="font-family: 'NeueHaasGrotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.04em; color: #ffffff; text-transform: uppercase; margin-bottom: 1rem;">
         SYSTEM FILTERS
     </div>
     """, unsafe_allow_html=True)

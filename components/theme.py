@@ -3,10 +3,13 @@ components/theme.py
 ───────────────────
 DeLorean Marketplace visual design system.
 Replicates the aesthetic of https://marketplace.delorean.com/
-- Fonts: TT Mussels (Display), Neue Haas Grotesk (UI/Body), Maison Neue Mono (Data/Telemetry)
+- Fonts: Neue Haas Grotesk TX Pro (Primary Display, Headings & Body),
+  Maison Neue Mono (Data, Telemetry, Labels, Badges),
+  TT Mussels (Secondary Automotive Display)
 - Color Palette: Obsidian Dark (#0e0e11), Carbon Surface (#16161a), DeLorean Redshift (#de1e14),
   Brushed Steel (#e2e8f0), Slate Borders (#27272f)
 - Zero emojis and zero icons across all UI elements.
+- Header layout engineered to eliminate clipping with fixed viewport spacing.
 """
 
 import os
@@ -14,6 +17,7 @@ import base64
 import streamlit as st
 
 _FONTS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets", "fonts")
+
 
 @st.cache_data
 def _load_font_b64(filename: str) -> str:
@@ -75,7 +79,28 @@ def get_delorean_css() -> str:
     <style>
     {font_css}
 
-    /* ── Global Theme & Reset ─────────────────────────────────────────── */
+    /* ── Streamlit Header & Decoration Reset (Eliminates clipping) ───── */
+    div[data-testid="stDecoration"] {{
+        display: none !important;
+    }}
+
+    header[data-testid="stHeader"] {{
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        z-index: 10 !important;
+    }}
+
+    /* Generous top margin/padding to eliminate top header clipping */
+    .main .block-container {{
+        max-width: 1440px !important;
+        padding-top: 4.5rem !important;
+        padding-bottom: 4rem !important;
+        padding-left: 2.5rem !important;
+        padding-right: 2.5rem !important;
+    }}
+
+    /* ── Global Theme & Surface ───────────────────────────────────────── */
     html, body, [class*="css"], .stApp {{
         background-color: #0e0e11 !important;
         color: #f4f4f5 !important;
@@ -84,19 +109,43 @@ def get_delorean_css() -> str:
         -moz-osx-font-smoothing: grayscale;
     }}
 
-    .main .block-container {{
-        max-width: 1440px !important;
-        padding-top: 1.5rem !important;
-        padding-bottom: 3rem !important;
-        padding-left: 2.5rem !important;
-        padding-right: 2.5rem !important;
+    /* ── Sidebar Expand/Collapse Control: No Icons, Pure DeLorean Text ── */
+    div[data-testid="collapsedControl"] button,
+    button[data-testid="stSidebarCollapseButton"] {{
+        background-color: #16161a !important;
+        border: 1px solid #27272f !important;
+        border-radius: 2px !important;
+        color: #ffffff !important;
+        padding: 6px 14px !important;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
     }}
 
-    /* ── Typography ──────────────────────────────────────────────────── */
+    div[data-testid="collapsedControl"] button:hover,
+    button[data-testid="stSidebarCollapseButton"]:hover {{
+        border-color: #de1e14 !important;
+        background-color: #1c1c22 !important;
+    }}
+
+    div[data-testid="collapsedControl"] button svg,
+    button[data-testid="stSidebarCollapseButton"] svg {{
+        display: none !important;
+    }}
+
+    div[data-testid="collapsedControl"] button::after,
+    button[data-testid="stSidebarCollapseButton"]::after {{
+        content: "FILTERS" !important;
+        font-family: 'MaisonNeueMono', monospace !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        color: #ffffff !important;
+        letter-spacing: 0.12em !important;
+    }}
+
+    /* ── Typography (Authentic DeLorean Swiss Grotesque) ──────────────── */
     h1, h2, h3, h4, h5, h6 {{
-        font-family: 'TTMussels', 'NeueHaasGrotesk', sans-serif !important;
+        font-family: 'NeueHaasGrotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.04em !important;
+        letter-spacing: 0.02em !important;
         color: #ffffff !important;
         font-weight: 700 !important;
     }}
@@ -119,7 +168,7 @@ def get_delorean_css() -> str:
     section[data-testid="stSidebar"] {{
         background-color: #0a0a0d !important;
         border-right: 1px solid #232328 !important;
-        padding-top: 1.5rem !important;
+        padding-top: 2rem !important;
     }}
 
     section[data-testid="stSidebar"] * {{
@@ -129,12 +178,13 @@ def get_delorean_css() -> str:
 
     section[data-testid="stSidebar"] h2,
     section[data-testid="stSidebar"] h3 {{
-        font-family: 'TTMussels', sans-serif !important;
-        letter-spacing: 0.08em !important;
-        font-size: 13px !important;
-        color: #a1a1aa !important;
+        font-family: 'NeueHaasGrotesk', sans-serif !important;
+        letter-spacing: 0.04em !important;
+        font-size: 14px !important;
+        color: #ffffff !important;
         text-transform: uppercase !important;
         margin-bottom: 0.75rem !important;
+        font-weight: 700 !important;
     }}
 
     /* ── Native Streamlit Metrics ────────────────────────────────────── */
@@ -145,7 +195,7 @@ def get_delorean_css() -> str:
         border-radius: 2px !important;
         padding: 16px 20px !important;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
-        transition: border-color 0.2s ease, transform 0.2s ease;
+        transition: border-color 0.2s ease;
     }}
 
     div[data-testid="stMetric"]:hover {{
@@ -202,7 +252,7 @@ def get_delorean_css() -> str:
     button[data-testid="baseButton-primary"] {{
         background-color: #de1e14 !important;
         color: #ffffff !important;
-        font-family: 'TTMussels', 'NeueHaasGrotesk', sans-serif !important;
+        font-family: 'NeueHaasGrotesk', sans-serif !important;
         font-weight: 700 !important;
         font-size: 13px !important;
         text-transform: uppercase !important;
@@ -272,16 +322,16 @@ def get_delorean_css() -> str:
         color: #f4f4f5 !important;
     }}
 
-    /* Hide any default icon svgs in stAlert if present */
     div[data-testid="stAlert"] svg {{
         display: none !important;
     }}
 
-    /* ── Custom DeLorean Component Classes ────────────────────────────── */
+    /* ── Custom DeLorean Header & Cards ───────────────────────────────── */
     .delorean-header {{
         border-bottom: 1px solid #232328;
         padding-bottom: 1.5rem;
         margin-bottom: 2rem;
+        margin-top: 0.5rem;
     }}
 
     .delorean-eyebrow {{
@@ -290,21 +340,20 @@ def get_delorean_css() -> str:
         text-transform: uppercase;
         letter-spacing: 0.16em;
         color: #de1e14;
-        margin-bottom: 0.5rem;
-        display: flex;
-        align-items: center;
-        gap: 8px;
+        margin-bottom: 0.75rem;
+        display: block;
+        line-height: 1.4;
     }}
 
     .delorean-title {{
-        font-family: 'TTMussels', sans-serif;
-        font-size: 34px;
+        font-family: 'NeueHaasGrotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 38px;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
+        letter-spacing: -0.01em;
         color: #ffffff;
-        margin: 0 0 0.5rem 0;
-        line-height: 1.1;
+        margin: 0 0 0.6rem 0;
+        line-height: 1.15;
     }}
 
     .delorean-subtitle {{
@@ -312,7 +361,7 @@ def get_delorean_css() -> str:
         font-size: 15px;
         color: #a1a1aa;
         line-height: 1.5;
-        max-width: 900px;
+        max-width: 920px;
     }}
 
     .delorean-card {{
@@ -357,11 +406,11 @@ def get_delorean_css() -> str:
     }}
 
     .delorean-section-header {{
-        font-family: 'TTMussels', sans-serif;
+        font-family: 'NeueHaasGrotesk', sans-serif;
         font-size: 18px;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.06em;
+        letter-spacing: 0.04em;
         color: #ffffff;
         margin: 1.5rem 0 0.25rem 0;
     }}
@@ -385,7 +434,6 @@ def get_delorean_css() -> str:
         text-transform: uppercase;
     }}
 
-    /* ── Hide Streamlit default hamburger menu & footer ────────────── */
     #MainMenu, footer {{
         visibility: hidden;
     }}

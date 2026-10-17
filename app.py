@@ -143,7 +143,7 @@ with mc3:
     """, unsafe_allow_html=True)
 
 st.markdown("""
-<div style="font-family: 'TTMussels', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.05em; color: #ffffff; text-transform: uppercase; margin: 1.5rem 0 0.75rem 0;">
+<div style="font-family: 'NeueHaasGrotesk', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.04em; color: #ffffff; text-transform: uppercase; margin: 1.5rem 0 0.75rem 0;">
     CONFIGURE VEHICLE SPECIFICATION
 </div>
 """, unsafe_allow_html=True)
